@@ -28,6 +28,11 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentMainBinding.inflate(inflater, container, false)
+
+        parentFragmentManager.beginTransaction()
+            .add(R.id.container, BoshSahifaFragment())
+            .commit()
+
         return binding.root
     }
 

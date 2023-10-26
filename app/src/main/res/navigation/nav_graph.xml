@@ -18,5 +18,23 @@
         android:id="@+id/enterFragment"
         android:name="com.example.handybook.ui.EnterFragment"
         android:label="fragment_enter"
-        tools:layout="@layout/fragment_enter" />
+        tools:layout="@layout/fragment_enter" >
+        <action
+            android:id="@+id/action_enterFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.handybook.ui.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_boshSahifaFragment"
+            app:destination="@id/boshSahifaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/boshSahifaFragment"
+        android:name="com.example.handybook.ui.BoshSahifaFragment"
+        android:label="fragment_bosh_sahifa"
+        tools:layout="@layout/fragment_bosh_sahifa" />
 </navigation>

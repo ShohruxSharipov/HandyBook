@@ -4,25 +4,25 @@
     <item
         android:id="@+id/bosh_sahifa"
         android:icon="@drawable/outline_menu_book_24"
-        android:title="" />
+        android:title="Bosh Sahifa" />
 <!--    Qidiruv-->
     <item
         android:id="@+id/qidiruv"
         android:icon="@drawable/outline_search_24"
-        android:title="" />
+        android:title="Qidiruv" />
 <!--    Maqolalar-->
     <item
         android:id="@+id/maqola"
         android:icon="@drawable/outline_create_24"
-        android:title="" />
+        android:title="Maqolalar" />
 <!--Saqlanganlar-->
     <item
         android:id="@+id/saqlanganlar"
         android:icon="@drawable/baseline_bookmark_border_24"
-        android:title="" />
+        android:title="Saqlanganlar" />
 <!--    Tilni o'zgartiring-->
     <item
         android:id="@+id/tilniozgartir"
         android:icon="@drawable/baseline_language_24"
-        android:title=""/>
+        android:title="Tilni o'zgartiring"/>
 </menu>
