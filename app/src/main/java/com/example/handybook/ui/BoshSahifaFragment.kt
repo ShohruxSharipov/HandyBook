@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.handybook.adapter.DarslikAdapter
 import com.example.handybook.adapter.RomanAdapter
 import com.example.handybook.databinding.FragmentBoshSahifaBinding
 import com.example.handybook.model.Book
@@ -37,17 +38,33 @@ class BoshSahifaFragment : Fragment() {
     ): View {
         val binding = FragmentBoshSahifaBinding.inflate(inflater, container, false)
         val api = APIClient.getInstance().create(APIService::class.java)
+        val romans = mutableListOf<Book>()
+        val subjects = mutableListOf<Book>()
 
         api.getAllBooks().enqueue(object :Callback<List<Book>>{
             override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
-                Log.d("TAG", "onResponse: ${response.body()}")
-                val list = response.body()
-                val adapter = RomanAdapter(list!!,object :RomanAdapter.OnClickBook{
+                Log.d("TAG", "onResponse: ${response.body()?.size}")
+                val list = response.body()!!
+                for (i in list){
+                    if (i.type_id == 1){
+                        romans.add(i)
+                    }
+                    if (i.type_id == 2){
+                        subjects.add(i)
+                    }
+                }
+                val adapter = RomanAdapter(romans,object :RomanAdapter.OnClickBook{
                     override fun onClickRoman(book: Book) {
                         Toast.makeText(requireContext(), "Fuck You", Toast.LENGTH_SHORT).show()
                     }
                 })
                 binding.romanlarrecycle.adapter = adapter
+                val darslik_adapter = DarslikAdapter(romans,object :RomanAdapter.OnClickBook{
+                    override fun onClickRoman(book: Book) {
+                        Toast.makeText(requireContext(), "Fuck You too", Toast.LENGTH_SHORT).show()
+                    }
+                })
+                binding.darsliklarrecycle.adapter = darslik_adapter
             }
 
             override fun onFailure(call: Call<List<Book>>, t: Throwable) {

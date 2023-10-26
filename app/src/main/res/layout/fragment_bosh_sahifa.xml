@@ -29,7 +29,7 @@
                 android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Kitob yoki muallifni qidiring ..." />
+                android:hint="@string/kitob_yoki_muallifni_qidiring" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.cardview.widget.CardView
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
-            android:text="Romanlar"
+            android:text="@string/romanlar"
             android:textColor="@color/dark_blue"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -107,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:text="Barchasini ko'rish"
+            android:text="@string/barchasini_ko_rish"
             android:textColor="@color/light_blue"
             app:layout_constraintBottom_toBottomOf="@id/romanlartext"
             app:layout_constraintEnd_toEndOf="parent"
@@ -118,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/romanlartext" />
@@ -128,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="50dp"
-            android:text="Darsliklar"
+            android:text="@string/darsliklar"
             android:textColor="@color/dark_blue"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -140,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:text="Barchasini ko'rish"
+            android:text="@string/barchasini_ko_rish"
             android:textColor="@color/light_blue"
             app:layout_constraintBottom_toBottomOf="@id/darsliklartext"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,6 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/darsliklar" />
