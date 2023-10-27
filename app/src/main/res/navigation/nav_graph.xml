@@ -29,12 +29,12 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_boshSahifaFragment"
-            app:destination="@id/boshSahifaFragment" />
+            android:id="@+id/action_mainFragment_to_clickedBookFragment"
+            app:destination="@id/clickedBookFragment" />
     </fragment>
     <fragment
-        android:id="@+id/boshSahifaFragment"
-        android:name="com.example.handybook.ui.BoshSahifaFragment"
-        android:label="fragment_bosh_sahifa"
-        tools:layout="@layout/fragment_bosh_sahifa" />
+        android:id="@+id/clickedBookFragment"
+        android:name="com.example.handybook.ui.ClickedBookFragment"
+        android:label="fragment_clicked_book"
+        tools:layout="@layout/fragment_clicked_book" />
 </navigation>

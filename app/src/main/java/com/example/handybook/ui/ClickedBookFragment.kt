@@ -1,11 +1,20 @@
 package com.example.handybook.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import coil.load
 import com.example.handybook.R
+import com.example.handybook.databinding.FragmentClickedBookBinding
+import com.example.handybook.model.Book
+import com.example.handybook.networking.APIClient
+import com.example.handybook.networking.APIService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,9 +42,30 @@ class ClickedBookFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_clicked_book, container, false)
+    ): View {
+        val binding = FragmentClickedBookBinding.inflate(inflater,container,false)
+        val api = APIClient.getInstance().create(APIService::class.java)
+
+        val id = arguments?.getInt("id")
+        var book:Book
+        api.getthebook(id!!).enqueue(object : Callback<Book>{
+            override fun onResponse(call: Call<Book>, response: Response<Book>) {
+                book = response.body()!!
+                binding.booksImage.load(book.image)
+                binding.name.text = book.name
+                binding.bookRayting.text = book.reyting.toDouble().toString()
+                binding.bookauthor.text = book.author
+            }
+
+            override fun onFailure(call: Call<Book>, t: Throwable) {
+                Log.d("TAG", "onFailure: $t")
+            }
+        })
+
+
+
+
+        return binding.root
     }
 
     companion object {
