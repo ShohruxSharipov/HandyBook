@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Asosiy">
+        <menu>
+            <item
+                android:id="@+id/main"
+                android:icon="@drawable/outline_menu_book_24"
+                android:title="Bosh safifa" />
+            <item
+                android:id="@+id/search"
+                android:icon="@drawable/outline_search_24"
+                android:title="Qiduruv" />
+            <item
+                android:id="@+id/articles"
+                android:icon="@drawable/article_icon"
+                android:title="Maqolalar" />
+            <item
+                android:id="@+id/saved"
+                android:icon="@drawable/baseline_bookmark_border_24"
+                android:title="Bosh safifa" />
+            <item
+                android:id="@+id/lang"
+                android:icon="@drawable/baseline_language_24"
+                android:title="Tilni o'zgartiring" />
+        </menu>
+    </item>
+
+    <item android:title="Ijtimoiy tarmoq">
+        <menu>
+            <item
+                android:id="@+id/telegram"
+                android:icon="@drawable/telegram_icon"
+                android:title="Telegram Kanalimiz" />
+            <item
+                android:id="@+id/instagram"
+                android:icon="@drawable/instagram"
+                android:title="Instagram do'konimiz" />
+
+        </menu>
+    </item>
+    <item android:title="Ulashish">
+        <menu>
+            <item
+                android:id="@+id/share"
+                android:icon="@drawable/share_icon"
+                android:title="Ulashish" />
+            <item
+                android:id="@+id/rate"
+                android:icon="@drawable/star_icon"
+                android:title="Bizga baho bering" />
+
+        </menu>
+    </item>
+    <item android:title="Akkount">
+        <menu>
+            <item
+                android:id="@+id/account"
+                android:icon="@drawable/log_out_icon"
+                android:title="Hisobdan chiqish" />
+        </menu>
+    </item>
+</menu>

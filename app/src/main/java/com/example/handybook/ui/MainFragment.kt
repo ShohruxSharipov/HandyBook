@@ -1,10 +1,12 @@
 package com.example.handybook.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBarDrawerToggle
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentMainBinding
 
@@ -32,6 +34,7 @@ class MainFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .add(R.id.container, BoshSahifaFragment())
             .commit()
+
 
         return binding.root
     }
