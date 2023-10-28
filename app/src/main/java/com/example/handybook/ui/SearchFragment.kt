@@ -16,6 +16,7 @@ import com.example.handybook.R
 import com.example.handybook.adapter.CategoryAdapter
 import com.example.handybook.adapter.DarslikAdapter
 import com.example.handybook.adapter.RomanAdapter
+import com.example.handybook.adapter.SearchAdapter
 import com.example.handybook.databinding.FragmentSearchBinding
 import com.example.handybook.model.Book
 import com.example.handybook.model.Category
@@ -67,9 +68,13 @@ class SearchFragment : Fragment() {
         val str = cache.getString("recent_books", "")
         if (!str.isNullOrEmpty()) {
             recents = gson.fromJson(str, type2)
-            binding.recentSearched.adapter = DarslikAdapter(recents,object :RomanAdapter.OnClickBook{
+            binding.recentSearched.adapter = RomanAdapter(recents.reversed(),object :RomanAdapter.OnClickBook{
                 override fun onClickRoman(book: Book) {
-                    TODO("Not yet implemented")
+                    val bundle = Bundle()
+                    bundle.putInt("id", book.id)
+                    findNavController().navigate(
+                        R.id.action_mainFragment_to_clickedBookFragment, bundle
+                    )
                 }
             })
         }else{
@@ -102,7 +107,7 @@ class SearchFragment : Fragment() {
                     list1.add(i)
                 }
             }
-            binding.searchRv.adapter = DarslikAdapter(list1, object : RomanAdapter.OnClickBook {
+            binding.searchRv.adapter = SearchAdapter(list1, object : RomanAdapter.OnClickBook {
                 override fun onClickRoman(book: Book) {
                     if (recents.size == 4){
                         recents.removeAt(0)

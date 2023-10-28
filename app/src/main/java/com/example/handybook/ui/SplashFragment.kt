@@ -44,7 +44,7 @@ class SplashFragment : Fragment() {
         binding.imageView.startAnimation(anim)
         handle.postDelayed({
             findNavController().navigate(R.id.action_splashFragment_to_enterFragment)
-        }, 6000)
+        }, 1000)
 
         return binding.root
     }

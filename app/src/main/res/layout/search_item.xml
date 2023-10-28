@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/book"
+    android:layout_margin="10dp">
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="10dp">
+
+        <ImageView
+            android:id="@+id/books_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/roman" />
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/book_name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Harry Potter and the Sorcerer's Stone"
+        android:textSize="18sp"
+        android:textColor="@color/dark_blue"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/bookauthor"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Joanne Rowling"
+        android:textStyle="italic"
+        android:textColor="#6D6E73"/>
+    <TextView
+        android:id="@+id/cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$25.32"
+        android:textStyle="bold"
+        android:textColor="@color/light_blue"
+        android:textSize="18sp"/>
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/star" />
+
+            <TextView
+                android:id="@+id/book_rayting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/dark_blue"
+                android:textStyle="bold"
+                android:text="5.0" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
