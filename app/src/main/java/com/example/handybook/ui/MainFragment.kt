@@ -42,6 +42,9 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         binding.bottomNav.setOnNavigationItemSelectedListener {
             when(it.itemId){
+                R.id.bosh_sahifa ->{
+                    parentFragmentManager.beginTransaction().replace(R.id.container,BoshSahifaFragment()).commit()
+                }
                 R.id.qidiruv -> {
                     parentFragmentManager.beginTransaction().replace(R.id.container,SearchFragment()).commit()
                 }

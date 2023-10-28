@@ -1,5 +1,7 @@
 package com.example.handybook.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,15 +9,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
+import com.example.handybook.adapter.CategoryAdapter
 import com.example.handybook.adapter.DarslikAdapter
 import com.example.handybook.adapter.RomanAdapter
 import com.example.handybook.databinding.FragmentSearchBinding
 import com.example.handybook.model.Book
+import com.example.handybook.model.Category
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,13 +50,31 @@ class SearchFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentSearchBinding.inflate(inflater,container,false)
+        val binding = FragmentSearchBinding.inflate(inflater, container, false)
         val api = APIClient.getInstance().create(APIService::class.java)
         var allbooks = mutableListOf<Book>()
+        var recents = mutableListOf<Book>()
+        val type2 = object : TypeToken<MutableList<Book>>() {}.type
+        val gson = Gson()
+        val activity: AppCompatActivity = activity as AppCompatActivity
+        val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+        val edit = cache.edit()
+        val str = cache.getString("recent_books", "")
+        if (!str.isNullOrEmpty()) {
+            recents = gson.fromJson(str, type2)
+            binding.recentSearched.adapter = DarslikAdapter(recents,object :RomanAdapter.OnClickBook{
+                override fun onClickRoman(book: Book) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }else{
+            Toast.makeText(requireContext(), "No recent books", Toast.LENGTH_SHORT).show()
+        }
 
         api.getAllBooks().enqueue(object : Callback<List<Book>> {
             override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
@@ -64,26 +89,53 @@ class SearchFragment : Fragment() {
         })
 
         binding.search.addTextChangedListener {
-        val list1 = mutableListOf<Book>()
-            if (it.toString().isNullOrBlank()){
+            val list1 = mutableListOf<Book>()
+            if (it.toString().isNullOrBlank()) {
                 binding.filtrlayout.visibility = View.VISIBLE
                 binding.searchedLay.visibility = View.GONE
-            }
-            else{
+            } else {
                 binding.filtrlayout.visibility = View.GONE
                 binding.searchedLay.visibility = View.VISIBLE
             }
-            for (i in allbooks){
-                if(i.name.toLowerCase().contains(it.toString().toLowerCase())){
+            for (i in allbooks) {
+                if (i.name.toLowerCase().contains(it.toString().toLowerCase())) {
                     list1.add(i)
                 }
             }
-            binding.searchRv.adapter = DarslikAdapter(list1,object :RomanAdapter.OnClickBook{
+            binding.searchRv.adapter = DarslikAdapter(list1, object : RomanAdapter.OnClickBook {
                 override fun onClickRoman(book: Book) {
-                    TODO("Not yet implemented")
+                    if (recents.size == 4){
+                        recents.removeAt(0)
+                    }
+                    recents.add(book)
+                    edit.putString("recent_books",gson.toJson(recents)).apply()
+                    val bundle = Bundle()
+                    bundle.putInt("id", book.id)
+                    findNavController().navigate(
+                        R.id.action_mainFragment_to_clickedBookFragment, bundle
+                    )
                 }
             })
         }
+
+        api.getCategories().enqueue(object : Callback<List<Category>> {
+            override fun onResponse(
+                call: Call<List<Category>>,
+                response: Response<List<Category>>
+            ) {
+                val adapter =
+                    CategoryAdapter(response.body()!!, object : CategoryAdapter.onClickCategorya {
+                        override fun onClickCategory(category: Category) {
+                            Toast.makeText(requireContext(), "Fuck you", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                binding.categories.adapter = adapter
+            }
+
+            override fun onFailure(call: Call<List<Category>>, t: Throwable) {
+                Log.d("TAG", "onFailure: $t")
+            }
+        })
         return binding.root
     }
 
