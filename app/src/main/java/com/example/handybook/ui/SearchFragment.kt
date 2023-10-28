@@ -1,11 +1,24 @@
 package com.example.handybook.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
+import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
+import com.example.handybook.adapter.DarslikAdapter
+import com.example.handybook.adapter.RomanAdapter
+import com.example.handybook.databinding.FragmentSearchBinding
+import com.example.handybook.model.Book
+import com.example.handybook.networking.APIClient
+import com.example.handybook.networking.APIService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,9 +46,45 @@ class SearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View {
+        val binding = FragmentSearchBinding.inflate(inflater,container,false)
+        val api = APIClient.getInstance().create(APIService::class.java)
+        var allbooks = mutableListOf<Book>()
+
+        api.getAllBooks().enqueue(object : Callback<List<Book>> {
+            override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
+                Log.d("TAG", "onResponse: ${response.body()?.size}")
+                allbooks = (response.body() as MutableList<Book>?)!!
+            }
+
+            override fun onFailure(call: Call<List<Book>>, t: Throwable) {
+                Log.d("TAG", "onResponse: $t")
+            }
+
+        })
+
+        binding.search.addTextChangedListener {
+        val list1 = mutableListOf<Book>()
+            if (it.toString().isNullOrBlank()){
+                binding.filtrlayout.visibility = View.VISIBLE
+                binding.searchedLay.visibility = View.GONE
+            }
+            else{
+                binding.filtrlayout.visibility = View.GONE
+                binding.searchedLay.visibility = View.VISIBLE
+            }
+            for (i in allbooks){
+                if(i.name.toLowerCase().contains(it.toString().toLowerCase())){
+                    list1.add(i)
+                }
+            }
+            binding.searchRv.adapter = DarslikAdapter(list1,object :RomanAdapter.OnClickBook{
+                override fun onClickRoman(book: Book) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
+        return binding.root
     }
 
     companion object {

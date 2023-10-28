@@ -40,6 +40,15 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             .add(R.id.container, BoshSahifaFragment())
             .commit()
 
+        binding.bottomNav.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.qidiruv -> {
+                    parentFragmentManager.beginTransaction().replace(R.id.container,SearchFragment()).commit()
+                }
+            }
+            true
+        }
+
         drawerLayout = binding.drawerLayout
         val navigationView = binding.navView
         val toolbar = binding.toolbar
