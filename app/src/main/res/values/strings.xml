@@ -9,4 +9,6 @@
     <string name="kitob_yoki_muallifni_qidiring">Kitob yoki muallifni qidiring ...</string>
     <string name="audio_kitob">Audio Kitob</string>
     <string name="e_kitob">E-Kitob</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
 </resources>
