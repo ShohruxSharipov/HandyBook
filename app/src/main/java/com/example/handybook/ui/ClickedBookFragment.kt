@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.handybook.R
+import com.example.handybook.adapter.DarslikAdapter
+import com.example.handybook.adapter.RomanAdapter
 import com.example.handybook.databinding.FragmentClickedBookBinding
 import com.example.handybook.model.Book
 import com.example.handybook.networking.APIClient
@@ -15,6 +19,7 @@ import com.example.handybook.networking.APIService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,12 +48,12 @@ class ClickedBookFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentClickedBookBinding.inflate(inflater,container,false)
+        val binding = FragmentClickedBookBinding.inflate(inflater, container, false)
         val api = APIClient.getInstance().create(APIService::class.java)
-
+        var list = mutableListOf<Book>()
         val id = arguments?.getInt("id")
-        var book:Book
-        api.getthebook(id!!).enqueue(object : Callback<Book>{
+        var book: Book
+        api.getthebook(id!!).enqueue(object : Callback<Book> {
             override fun onResponse(call: Call<Book>, response: Response<Book>) {
                 book = response.body()!!
                 binding.booksImage.load(book.image)
@@ -58,7 +63,24 @@ class ClickedBookFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<Book>, t: Throwable) {
-                Log.d("TAG", "onFailure: $t")
+
+            }
+        })
+
+        api.getAllBooks().enqueue(object : Callback<List<Book>> {
+            override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
+                list = (response.body() as MutableList<Book>?)!!
+                binding.tavsiyalarrecycle.adapter =
+                    DarslikAdapter(list, object : RomanAdapter.OnClickBook {
+                        override fun onClickRoman(book: Book) {
+                            Toast.makeText(requireContext(), "Fuck You too", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    })
+            }
+
+            override fun onFailure(call: Call<List<Book>>, t: Throwable) {
+                Log.d("TAG1", "onFailure: $t")
             }
         })
 

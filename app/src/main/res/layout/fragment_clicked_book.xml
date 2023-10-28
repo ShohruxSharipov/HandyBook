@@ -212,13 +212,16 @@
             app:layout_constraintTop_toBottomOf="@id/viewpager" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tavsiyalarrecycle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/barchsinikorish"
-            tools:listitem="@layout/darslik_item" />
+            tools:listitem="@layout/darslik_item"
+            android:layout_marginBottom="20dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
