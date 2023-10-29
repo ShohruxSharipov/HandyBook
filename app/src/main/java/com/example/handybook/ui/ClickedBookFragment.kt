@@ -1,5 +1,7 @@
 package com.example.handybook.ui
 
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.handybook.R
@@ -16,6 +19,8 @@ import com.example.handybook.databinding.FragmentClickedBookBinding
 import com.example.handybook.model.Book
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,6 +40,7 @@ class ClickedBookFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var saved_list = mutableListOf<Book>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +58,20 @@ class ClickedBookFragment : Fragment() {
         val api = APIClient.getInstance().create(APIService::class.java)
         var list = mutableListOf<Book>()
         val id = arguments?.getInt("id")
+        val type = object : TypeToken<MutableList<Book>>() {}.type
         var book: Book
+        val gson = Gson()
+        val activity: AppCompatActivity = activity as AppCompatActivity
+        val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+        val edit = cache.edit()
+        val str = cache.getString("saved", "")
+        binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
+        if (!str.isNullOrEmpty()){
+            saved_list = gson.fromJson(str,type)
+        }
+
+
+
         api.getthebook(id!!).enqueue(object : Callback<Book> {
             override fun onResponse(call: Call<Book>, response: Response<Book>) {
                 book = response.body()!!
@@ -60,6 +79,17 @@ class ClickedBookFragment : Fragment() {
                 binding.name.text = book.name
                 binding.bookRayting.text = book.reyting.toDouble().toString()
                 binding.bookauthor.text = book.author
+                if (isTheBookSaved(book)){
+                    binding.save.setBackgroundResource(R.drawable.baseline_bookmark_24)
+                }else binding.save.setBackgroundResource(R.drawable.baseline_bookmark_border_24)
+                binding.save.setOnClickListener {
+                    if (isSaved(book)){
+                        binding.save.setBackgroundResource(R.drawable.baseline_bookmark_border_24)
+                        Toast.makeText(requireContext(), "Unsaved", Toast.LENGTH_SHORT).show()
+                    }else binding.save.setBackgroundResource(R.drawable.baseline_bookmark_24)
+
+                    edit.putString("saved",gson.toJson(saved_list)).apply()
+                }
             }
 
             override fun onFailure(call: Call<Book>, t: Throwable) {
@@ -84,22 +114,44 @@ class ClickedBookFragment : Fragment() {
             }
         })
 
+        binding.audiokitob.setOnClickListener {
+            binding.audiokitob.setBackgroundColor(Color.RED)
+            binding.ekitob.setBackgroundColor(Color.TRANSPARENT)
+        }
+        binding.ekitob.setOnClickListener {
+            binding.ekitob.setBackgroundColor(Color.RED)
+            binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
+        }
+
+
 
 
 
         return binding.root
     }
 
+
+    fun isSaved(book: Book):Boolean{
+        for (i in saved_list){
+            if(i == book){
+                saved_list.remove(i)
+                return true
+            }
+        }
+        saved_list.add(book)
+        return false
+    }
+
+    fun isTheBookSaved(book: Book):Boolean{
+        for (i in saved_list){
+            if(i == book){
+                return true
+            }
+        }
+        return false
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ClickedBookFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ClickedBookFragment().apply {
