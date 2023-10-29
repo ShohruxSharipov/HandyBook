@@ -5,6 +5,7 @@
 
     <item android:title="Asosiy">
         <menu>
+            <group android:checkableBehavior="single">
             <item
                 android:id="@+id/main"
                 android:icon="@drawable/outline_menu_book_24"
@@ -25,6 +26,7 @@
                 android:id="@+id/lang"
                 android:icon="@drawable/baseline_language_24"
                 android:title="Tilni o'zgartiring" />
+            </group>
         </menu>
     </item>
 
@@ -38,7 +40,6 @@
                 android:id="@+id/instagram"
                 android:icon="@drawable/instagram"
                 android:title="Instagram do'konimiz" />
-
         </menu>
     </item>
     <item android:title="Ulashish">
@@ -51,7 +52,6 @@
                 android:id="@+id/rate"
                 android:icon="@drawable/star_icon"
                 android:title="Bizga baho bering" />
-
         </menu>
     </item>
     <item android:title="Akkount">

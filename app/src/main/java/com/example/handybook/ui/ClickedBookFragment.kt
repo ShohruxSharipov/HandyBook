@@ -58,17 +58,17 @@ class ClickedBookFragment : Fragment() {
         val api = APIClient.getInstance().create(APIService::class.java)
         var list = mutableListOf<Book>()
         val id = arguments?.getInt("id")
-        val type = object : TypeToken<MutableList<Book>>() {}.type
-        var book: Book
-        val gson = Gson()
-        val activity: AppCompatActivity = activity as AppCompatActivity
-        val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
-        val edit = cache.edit()
-        val str = cache.getString("saved", "")
-        binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
-        if (!str.isNullOrEmpty()){
-            saved_list = gson.fromJson(str,type)
-        }
+            val type = object : TypeToken<MutableList<Book>>() {}.type
+            var book: Book
+            val gson = Gson()
+            val activity: AppCompatActivity = activity as AppCompatActivity
+            val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+            val edit = cache.edit()
+            val str = cache.getString("saved", "")
+            binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
+            if (!str.isNullOrEmpty()){
+                saved_list = gson.fromJson(str,type)
+            }
 
 
 
