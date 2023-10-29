@@ -48,6 +48,13 @@ class BoshSahifaFragment : Fragment() {
             override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
                 Log.d("TAG", "onResponse: ${response.body()?.size}")
                 val list = response.body()!!
+                binding.romanlar.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putInt("type_id", list[0].type_id)
+                    findNavController().navigate(
+                        R.id.action_mainFragment_to_seeAllFragment, bundle
+                    )
+                }
                 for (i in list) {
                     if (i.type_id == 1) {
                         romans.add(i)
@@ -79,6 +86,8 @@ class BoshSahifaFragment : Fragment() {
             }
 
         })
+
+
         return binding.root
     }
 

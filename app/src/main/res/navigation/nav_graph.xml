@@ -31,10 +31,22 @@
         <action
             android:id="@+id/action_mainFragment_to_clickedBookFragment"
             app:destination="@id/clickedBookFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_seeAllFragment"
+            app:destination="@id/seeAllFragment" />
     </fragment>
     <fragment
         android:id="@+id/clickedBookFragment"
         android:name="com.example.handybook.ui.ClickedBookFragment"
         android:label="fragment_clicked_book"
         tools:layout="@layout/fragment_clicked_book" />
+    <fragment
+        android:id="@+id/seeAllFragment"
+        android:name="com.example.handybook.ui.SeeAllFragment"
+        android:label="fragment_see_all"
+        tools:layout="@layout/fragment_see_all" >
+        <action
+            android:id="@+id/action_seeAllFragment_to_clickedBookFragment"
+            app:destination="@id/clickedBookFragment" />
+    </fragment>
 </navigation>

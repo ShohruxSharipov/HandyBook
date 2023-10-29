@@ -123,6 +123,10 @@ class ClickedBookFragment : Fragment() {
             binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
         }
 
+        binding.back.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
 
 
 

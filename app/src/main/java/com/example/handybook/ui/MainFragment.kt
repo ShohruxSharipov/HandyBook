@@ -32,6 +32,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     }
 
     private var drawerLayout: DrawerLayout? = null
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +58,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         .replace(R.id.container, SearchFragment()).commit()
                     binding.fragmentname.text = "Qidiruv"
                 }
+
                 R.id.saqlanganlar -> {
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.container, SavedBooksFragment()).commit()
@@ -83,7 +85,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
 
         navigationView.setNavigationItemSelectedListener {
             Toast.makeText(requireContext(), "clicked", Toast.LENGTH_SHORT).show()
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.main -> {
                     parentFragmentManager.beginTransaction().replace(
                         R.id.container,
@@ -92,8 +94,10 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     binding.drawerLayout.close()
                     binding.fragmentname.text = "Bosh Sahifa"
                 }
+
                 R.id.search -> {
-                    parentFragmentManager.beginTransaction().replace(R.id.container, SearchFragment()).commit()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.container, SearchFragment()).commit()
                     binding.drawerLayout.close()
                     binding.fragmentname.text = "Qidiruv"
                 }
@@ -119,6 +123,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             }
             true
         }
+
 
         return binding.root
     }
