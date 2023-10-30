@@ -39,7 +39,11 @@
         android:id="@+id/clickedBookFragment"
         android:name="com.example.handybook.ui.ClickedBookFragment"
         android:label="fragment_clicked_book"
-        tools:layout="@layout/fragment_clicked_book" />
+        tools:layout="@layout/fragment_clicked_book" >
+        <action
+            android:id="@+id/action_clickedBookFragment_to_commentsFragment"
+            app:destination="@id/commentsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/seeAllFragment"
         android:name="com.example.handybook.ui.SeeAllFragment"
@@ -49,4 +53,9 @@
             android:id="@+id/action_seeAllFragment_to_clickedBookFragment"
             app:destination="@id/clickedBookFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.example.handybook.ui.CommentsFragment"
+        android:label="fragment_comments"
+        tools:layout="@layout/fragment_comments" />
 </navigation>

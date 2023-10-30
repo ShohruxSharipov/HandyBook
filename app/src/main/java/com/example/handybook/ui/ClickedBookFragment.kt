@@ -90,6 +90,13 @@ class ClickedBookFragment : Fragment() {
 
                     edit.putString("saved",gson.toJson(saved_list)).apply()
                 }
+                binding.booksImage.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putInt("bookid", book.id)
+                    findNavController().navigate(
+                        R.id.action_clickedBookFragment_to_commentsFragment, bundle
+                    )
+                }
             }
 
             override fun onFailure(call: Call<Book>, t: Throwable) {
