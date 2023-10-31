@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.example.handybook.R
 import com.example.handybook.adapter.CommentAdapter
 import com.example.handybook.databinding.FragmentCommentsBinding
+import com.example.handybook.model.AddComment
 import com.example.handybook.model.Comment
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
@@ -56,6 +57,14 @@ class CommentsFragment : Fragment() {
                 Log.d("TAG", "onFailure: $t")
             }
         })
+
+        binding.send.setOnClickListener {
+            if (!binding.comment.text.isNullOrBlank()){
+                val comment = AddComment(id,0,2,binding.comment.text.toString(),2)
+                api.createComment(comment)
+            }
+        }
+
         return binding.root
     }
 
