@@ -15,6 +15,7 @@ import coil.load
 import com.example.handybook.R
 import com.example.handybook.adapter.DarslikAdapter
 import com.example.handybook.adapter.RomanAdapter
+import com.example.handybook.adapter.ViewPagerAdapter
 import com.example.handybook.databinding.FragmentClickedBookBinding
 import com.example.handybook.model.Book
 import com.example.handybook.networking.APIClient
@@ -58,17 +59,17 @@ class ClickedBookFragment : Fragment() {
         val api = APIClient.getInstance().create(APIService::class.java)
         var list = mutableListOf<Book>()
         val id = arguments?.getInt("id")
-            val type = object : TypeToken<MutableList<Book>>() {}.type
-            var book: Book
-            val gson = Gson()
-            val activity: AppCompatActivity = activity as AppCompatActivity
-            val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
-            val edit = cache.edit()
-            val str = cache.getString("saved", "")
-            binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
-            if (!str.isNullOrEmpty()){
-                saved_list = gson.fromJson(str,type)
-            }
+        val type = object : TypeToken<MutableList<Book>>() {}.type
+        var book: Book
+        val gson = Gson()
+        val activity: AppCompatActivity = activity as AppCompatActivity
+        val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+        val edit = cache.edit()
+        val str = cache.getString("saved", "")
+        binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
+        if (!str.isNullOrEmpty()) {
+            saved_list = gson.fromJson(str, type)
+        }
 
 
 
@@ -76,19 +77,20 @@ class ClickedBookFragment : Fragment() {
             override fun onResponse(call: Call<Book>, response: Response<Book>) {
                 book = response.body()!!
                 binding.booksImage.load(book.image)
+                binding.audioImage.load(book.image)
                 binding.name.text = book.name
                 binding.bookRayting.text = book.reyting.toDouble().toString()
                 binding.bookauthor.text = book.author
-                if (isTheBookSaved(book)){
+                if (isTheBookSaved(book)) {
                     binding.save.setBackgroundResource(R.drawable.baseline_bookmark_24)
-                }else binding.save.setBackgroundResource(R.drawable.baseline_bookmark_border_24)
+                } else binding.save.setBackgroundResource(R.drawable.baseline_bookmark_border_24)
                 binding.save.setOnClickListener {
-                    if (isSaved(book)){
+                    if (isSaved(book)) {
                         binding.save.setBackgroundResource(R.drawable.baseline_bookmark_border_24)
                         Toast.makeText(requireContext(), "Unsaved", Toast.LENGTH_SHORT).show()
-                    }else binding.save.setBackgroundResource(R.drawable.baseline_bookmark_24)
+                    } else binding.save.setBackgroundResource(R.drawable.baseline_bookmark_24)
 
-                    edit.putString("saved",gson.toJson(saved_list)).apply()
+                    edit.putString("saved", gson.toJson(saved_list)).apply()
                 }
                 binding.booksImage.setOnClickListener {
                     val bundle = Bundle()
@@ -124,12 +126,15 @@ class ClickedBookFragment : Fragment() {
         binding.audiokitob.setOnClickListener {
             binding.audiokitob.setBackgroundResource(R.drawable.darkblue_button)
             binding.ekitob.setBackgroundColor(Color.TRANSPARENT)
-            binding.cardView.radius = 330F
+            binding.audioImage.visibility = View.VISIBLE
+            binding.booksImage.visibility = View.GONE
+
         }
         binding.ekitob.setOnClickListener {
             binding.ekitob.setBackgroundResource(R.drawable.darkblue_button)
             binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
-            binding.cardView.radius = 50F
+            binding.audioImage.visibility = View.INVISIBLE
+            binding.booksImage.visibility = View.VISIBLE
         }
 
         binding.back.setOnClickListener {
@@ -137,6 +142,8 @@ class ClickedBookFragment : Fragment() {
         }
 
 
+        val adapter = ViewPagerAdapter(parentFragmentManager, lifecycle)
+        binding.viewpager.adapter = adapter
 
 
 
@@ -144,9 +151,9 @@ class ClickedBookFragment : Fragment() {
     }
 
 
-    fun isSaved(book: Book):Boolean{
-        for (i in saved_list){
-            if(i == book){
+    fun isSaved(book: Book): Boolean {
+        for (i in saved_list) {
+            if (i == book) {
                 saved_list.remove(i)
                 return true
             }
@@ -155,9 +162,9 @@ class ClickedBookFragment : Fragment() {
         return false
     }
 
-    fun isTheBookSaved(book: Book):Boolean{
-        for (i in saved_list){
-            if(i == book){
+    fun isTheBookSaved(book: Book): Boolean {
+        for (i in saved_list) {
+            if (i == book) {
                 return true
             }
         }
