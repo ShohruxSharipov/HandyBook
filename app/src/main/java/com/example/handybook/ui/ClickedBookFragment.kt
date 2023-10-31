@@ -122,12 +122,14 @@ class ClickedBookFragment : Fragment() {
         })
 
         binding.audiokitob.setOnClickListener {
-            binding.audiokitob.setBackgroundColor(Color.RED)
+            binding.audiokitob.setBackgroundResource(R.drawable.darkblue_button)
             binding.ekitob.setBackgroundColor(Color.TRANSPARENT)
+            binding.cardView.radius = 330F
         }
         binding.ekitob.setOnClickListener {
-            binding.ekitob.setBackgroundColor(Color.RED)
+            binding.ekitob.setBackgroundResource(R.drawable.darkblue_button)
             binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
+            binding.cardView.radius = 50F
         }
 
         binding.back.setOnClickListener {
