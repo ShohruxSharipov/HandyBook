@@ -72,7 +72,6 @@ class ClickedBookFragment : Fragment() {
         }
 
 
-
         api.getthebook(id!!).enqueue(object : Callback<Book> {
             override fun onResponse(call: Call<Book>, response: Response<Book>) {
                 book = response.body()!!

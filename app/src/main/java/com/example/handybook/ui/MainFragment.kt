@@ -66,6 +66,13 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         .replace(R.id.container, SavedBooksFragment()).commit()
                     binding.fragmentname.text = "Saqlanganlar"
                 }
+                R.id.tilniozgartir -> {
+                    parentFragmentManager.beginTransaction().replace(
+                        R.id.container,
+                        LanguageFragment()
+                    ).commit()
+                    binding.fragmentname.text = "Tilni o'zgartir"
+                }
             }
             true
         }
@@ -111,6 +118,14 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     ).commit()
                     binding.drawerLayout.close()
                     binding.fragmentname.text = "Saqlanganlar"
+                }
+                R.id.lang -> {
+                    parentFragmentManager.beginTransaction().replace(
+                        R.id.container,
+                        LanguageFragment()
+                    ).commit()
+                    binding.drawerLayout.close()
+                    binding.fragmentname.text = "Tilni o'zgartiring"
                 }
             }
             true

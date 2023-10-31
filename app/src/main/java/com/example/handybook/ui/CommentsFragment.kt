@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.handybook.R
 import com.example.handybook.adapter.CommentAdapter
 import com.example.handybook.databinding.FragmentCommentsBinding
@@ -44,13 +45,15 @@ class CommentsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentCommentsBinding.inflate(inflater,container,false)
+        val binding = FragmentCommentsBinding.inflate(inflater, container, false)
         val id = arguments?.getInt("bookid")
         val api = APIClient.getInstance().create(APIService::class.java)
-        api.bookComment(id!!).enqueue(object :Callback<List<Comment>>{
+        Log.d("TAG3", "onCreateView: $id")
+
+        api.bookComment(id!!).enqueue(object : Callback<List<Comment>> {
             override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
                 Log.d("TAG2", "onResponse: ${response.body()}")
-                binding.commentsRv.adapter = CommentAdapter(response.body()!!)
+                binding.commentsRv.adapter = CommentAdapter(response.body()!!.reversed())
             }
 
             override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
@@ -59,10 +62,33 @@ class CommentsFragment : Fragment() {
         })
 
         binding.send.setOnClickListener {
-            if (!binding.comment.text.isNullOrBlank()){
-                val comment = AddComment(id,0,2,binding.comment.text.toString(),2)
-                api.createComment(comment)
-            }
+            if (!binding.comment.text.isNullOrBlank()) {
+                val comment = AddComment(book_id = id, text = binding.comment.text.toString(), user_id = 1 )
+                api.createComment(comment).enqueue(object :Callback<AddComment>{
+                    override fun onResponse(
+                        call: Call<AddComment>,
+                        response: Response<AddComment>
+                    ) {
+                        Toast.makeText(requireContext(), "Sent", Toast.LENGTH_SHORT).show()
+                        binding.comment.text!!.clear()
+                    }
+
+                    override fun onFailure(call: Call<AddComment>, t: Throwable) {
+                        Log.d("TAG", "onFailure: $t")
+                    }
+                })
+                api.bookComment(id).enqueue(object : Callback<List<Comment>> {
+                    override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
+                        Log.d("TAG2", "onResponse: ${response.body()}")
+                        binding.commentsRv.adapter = CommentAdapter(response.body()!!.reversed())
+                    }
+
+                    override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+                        Log.d("TAG", "onFailure: $t")
+                    }
+                })
+
+            } else Toast.makeText(requireContext(), "Write something", Toast.LENGTH_SHORT).show()
         }
 
         return binding.root
