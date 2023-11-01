@@ -35,10 +35,13 @@ class EnterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentEnterBinding.inflate(inflater, container, false)
         binding.enter.setOnClickListener {
-            findNavController().navigate(R.id.action_enterFragment_to_mainFragment)
+            findNavController().navigate(R.id.action_enterFragment_to_loginFragment)
+        }
+        binding.signUp.setOnClickListener {
+            findNavController().navigate(R.id.action_enterFragment_to_registrationFragment)
         }
         return binding.root
     }

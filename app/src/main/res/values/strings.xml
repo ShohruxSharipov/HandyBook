@@ -35,4 +35,12 @@
     <string name="bizga_baho_bering">Bizga baho bering</string>
     <string name="akkount">Akkount</string>
     <string name="hisobdan_chiqish">Hisobdan chiqish</string>
+    <string name="parolni_takrorlang">Parolni takrorlang</string>
+    <string name="parolni_kiriting">Parolni kiriting</string>
+    <string name="parol">Parol</string>
+    <string name="email">Email</string>
+    <string name="ism">Ism</string>
+    <string name="familiya">Familiya</string>
+    <string name="hisobingizga_kiring">Hisobingizga kiring</string>
+    <string name="parolingizni_unutdingmiz">Parolingizni unutdingmiz?</string>
 </resources>

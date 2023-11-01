@@ -4,6 +4,8 @@ import com.example.handybook.model.AddComment
 import com.example.handybook.model.Book
 import com.example.handybook.model.Category
 import com.example.handybook.model.Comment
+import com.example.handybook.model.Login
+import com.example.handybook.model.User
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -26,4 +28,10 @@ interface APIService {
 
     @POST("/comment-api/create")
     fun createComment(@Body comment: AddComment):Call<AddComment>
+
+    @POST("/book-api/register")
+    fun createUser(@Body user: User):Call<User>
+
+    @POST("/book-api/login")
+    fun login(@Body login: Login):Call<User>
 }

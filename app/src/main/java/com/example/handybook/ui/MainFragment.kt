@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentMainBinding
+import com.example.handybook.model.User
 import com.google.android.material.navigation.NavigationView
 
 private const val ARG_PARAM1 = "param1"
@@ -40,7 +41,8 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentMainBinding.inflate(inflater, container, false)
-
+//        val user = arguments?.getSerializable("user") as User
+//        Toast.makeText(requireContext(), user.user_name, Toast.LENGTH_SHORT).show()
         parentFragmentManager.beginTransaction()
             .add(R.id.container, BoshSahifaFragment())
             .commit()
