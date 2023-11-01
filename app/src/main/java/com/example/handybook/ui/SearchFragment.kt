@@ -78,7 +78,6 @@ class SearchFragment : Fragment() {
                 }
             })
         }else{
-            Toast.makeText(requireContext(), "No recent books", Toast.LENGTH_SHORT).show()
         }
 
         api.getAllBooks().enqueue(object : Callback<List<Book>> {

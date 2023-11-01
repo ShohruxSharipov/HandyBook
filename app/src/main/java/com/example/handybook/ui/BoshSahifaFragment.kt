@@ -55,6 +55,13 @@ class BoshSahifaFragment : Fragment() {
                         R.id.action_mainFragment_to_seeAllFragment, bundle
                     )
                 }
+                binding.darsliklar.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putInt("type_id", list[0].type_id)
+                    findNavController().navigate(
+                        R.id.action_mainFragment_to_seeAllFragment, bundle
+                    )
+                }
                 for (i in list) {
                     if (i.type_id == 1) {
                         romans.add(i)
@@ -75,7 +82,11 @@ class BoshSahifaFragment : Fragment() {
                 binding.romanlarrecycle.adapter = adapter
                 val darslik_adapter = DarslikAdapter(romans, object : RomanAdapter.OnClickBook {
                     override fun onClickRoman(book: Book) {
-                        Toast.makeText(requireContext(), "Fuck You too", Toast.LENGTH_SHORT).show()
+                        val bundle = Bundle()
+                        bundle.putInt("id", book.id)
+                        findNavController().navigate(
+                            R.id.action_mainFragment_to_clickedBookFragment, bundle
+                        )
                     }
                 })
                 binding.darsliklarrecycle.adapter = darslik_adapter

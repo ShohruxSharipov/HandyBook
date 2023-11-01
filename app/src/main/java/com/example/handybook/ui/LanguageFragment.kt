@@ -1,11 +1,13 @@
 package com.example.handybook.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
@@ -15,6 +17,9 @@ import com.example.handybook.adapter.SearchAdapter
 import com.example.handybook.databinding.FragmentLanguageBinding
 import com.example.handybook.model.Book
 import com.example.handybook.model.Language
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +35,7 @@ class LanguageFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var currentLanguage: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,17 +48,64 @@ class LanguageFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val binding = FragmentLanguageBinding.inflate(inflater,container,false)
+    ): View {
+        val binding = FragmentLanguageBinding.inflate(inflater, container, false)
         val list = mutableListOf<Language>()
-        list.add(Language(R.drawable.uk,"English"))
-        list.add(Language(R.drawable.uk,"O'zbek"))
-        list.add(Language(R.drawable.uk,"Русский"))
-        list.add(Language(R.drawable.uk,"Spanish"))
-        list.add(Language(R.drawable.uk,"Portugal"))
-        val adapter = LanguageAdapter(list,object :LanguageAdapter.ChangeLan{
+        val gson = Gson()
+        val type = object : TypeToken<String>() {}.type
+        val activity: AppCompatActivity = activity as AppCompatActivity
+        val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+        val edit = cache.edit()
+        val str = cache.getString("lang", "")
+        if (!str.isNullOrEmpty()) {
+            currentLanguage = gson.fromJson(str, type)
+        }
+        list.add(Language(R.drawable.uk, "English"))
+        list.add(Language(R.drawable.uk, "O'zbek"))
+        list.add(Language(R.drawable.uk, "Русский"))
+        list.add(Language(R.drawable.uk, "Spanish"))
+        list.add(Language(R.drawable.uk, "Portugal"))
+        val adapter = LanguageAdapter(list, object : LanguageAdapter.ChangeLan {
             override fun ChangeLanguage(language: Language) {
-                Toast.makeText(requireContext(), "aruno ${language.name} language", Toast.LENGTH_SHORT).show()
+                when (language.name) {
+                    "Русский" -> {
+                        setLocale("ru")
+                        currentLanguage = "ru"
+                    }
+
+                    "O'zbek" -> {
+                        setLocale("uz")
+                        currentLanguage = "uz"
+                    }
+
+                    "English" -> {
+                        setLocale("en")
+                        currentLanguage = "en"
+                    }
+
+                    "Spanish" -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "No language found !",
+                            Toast.LENGTH_SHORT
+                        ).show();
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.container, LanguageFragment())
+                            .commit()
+                    }
+
+                    "Portugal" -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "No language found !",
+                            Toast.LENGTH_SHORT
+                        ).show();
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.container, LanguageFragment())
+                            .commit()
+                    }
+                }
+                edit.putString("lang", gson.toJson(currentLanguage)).apply()
             }
         })
         binding.languagesRv.adapter = adapter
@@ -66,26 +119,77 @@ class LanguageFragment : Fragment() {
                     list1.add(i)
                 }
             }
-            binding.languagesRv.adapter =  LanguageAdapter(list1,object :LanguageAdapter.ChangeLan{
-                override fun ChangeLanguage(language: Language) {
-                    Toast.makeText(requireContext(), "aruno ${language.name} language", Toast.LENGTH_SHORT).show()
-                }
-            })
+            binding.languagesRv.adapter =
+                LanguageAdapter(list1, object : LanguageAdapter.ChangeLan {
+                    override fun ChangeLanguage(language: Language) {
+                        when (language.name) {
+                            "Русский" -> {
+                                setLocale("ru")
+                                currentLanguage = "ru"
+                            }
+
+                            "O'zbek" -> {
+                                setLocale("uz")
+                                currentLanguage = "uz"
+                            }
+
+                            "English" -> {
+                                setLocale("en")
+                                currentLanguage = "en"
+                            }
+
+                            "Spanish" -> {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "No language found !",
+                                    Toast.LENGTH_SHORT
+                                ).show();
+                                parentFragmentManager.beginTransaction()
+                                    .replace(R.id.container, LanguageFragment())
+                                    .commit()
+                            }
+
+                            "Portugal" -> {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "No language found !",
+                                    Toast.LENGTH_SHORT
+                                ).show();
+                                parentFragmentManager.beginTransaction()
+                                    .replace(R.id.container, LanguageFragment())
+                                    .commit()
+                            }
+                        }
+                        edit.putString("lang", gson.toJson(currentLanguage)).apply()
+                    }
+                })
         }
 
         return binding.root
     }
 
+    private fun setLocale(localeName: String) {
+        if (localeName != currentLanguage) {
+            val locale = Locale(localeName)
+            val res = resources
+            val dm = res.displayMetrics
+            val conf = res.configuration
+            conf.locale = locale
+            res.updateConfiguration(conf, dm)
+            parentFragmentManager.beginTransaction().replace(R.id.container, LanguageFragment())
+                .commit()
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "Language, , already, , selected)!",
+                Toast.LENGTH_SHORT
+            ).show();
+            parentFragmentManager.beginTransaction().replace(R.id.container, LanguageFragment())
+                .commit()
+        }
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LanguageFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             LanguageFragment().apply {

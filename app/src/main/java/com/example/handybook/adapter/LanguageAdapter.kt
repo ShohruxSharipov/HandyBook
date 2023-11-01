@@ -1,5 +1,6 @@
 package com.example.handybook.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class LanguageAdapter(val list: List<Language>, val changeLan: ChangeLan):Recycl
         holder.img.setBackgroundResource(list[position].flag)
         holder.lang.text = list[position].name
         holder.language.setOnClickListener {
+            holder.language.setBackgroundColor(Color.BLUE)
             changeLan.ChangeLanguage(list[position])
         }
     }

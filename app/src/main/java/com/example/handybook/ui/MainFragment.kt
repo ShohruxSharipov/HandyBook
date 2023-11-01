@@ -52,26 +52,26 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 R.id.bosh_sahifa -> {
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.container, BoshSahifaFragment()).commit()
-                    binding.fragmentname.text = "Bosh Sahifa"
+                    binding.fragmentname.text = R.string.bosh_sahifa.toString()
                 }
 
                 R.id.qidiruv -> {
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.container, SearchFragment()).commit()
-                    binding.fragmentname.text = "Qidiruv"
+                    binding.fragmentname.text = R.string.qidiruv.toString()
                 }
 
                 R.id.saqlanganlar -> {
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.container, SavedBooksFragment()).commit()
-                    binding.fragmentname.text = "Saqlanganlar"
+                    binding.fragmentname.text = R.string.saqlanganlar.toString()
                 }
                 R.id.tilniozgartir -> {
                     parentFragmentManager.beginTransaction().replace(
                         R.id.container,
                         LanguageFragment()
                     ).commit()
-                    binding.fragmentname.text = "Tilni o'zgartir"
+                    binding.fragmentname.text = R.string.tilni_ozgartir.toString()
                 }
             }
             true
@@ -93,7 +93,6 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         toggle.syncState()
 
         navigationView.setNavigationItemSelectedListener {
-            Toast.makeText(requireContext(), "clicked", Toast.LENGTH_SHORT).show()
             when (it.itemId) {
                 R.id.main -> {
                     parentFragmentManager.beginTransaction().replace(
@@ -101,14 +100,14 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         BoshSahifaFragment()
                     ).commit()
                     binding.drawerLayout.close()
-                    binding.fragmentname.text = "Bosh Sahifa"
+                    binding.fragmentname.text = R.string.bosh_sahifa.toString()
                 }
 
                 R.id.search -> {
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.container, SearchFragment()).commit()
                     binding.drawerLayout.close()
-                    binding.fragmentname.text = "Qidiruv"
+                    binding.fragmentname.text = R.string.qidiruv.toString()
                 }
 
                 R.id.saved -> {
@@ -117,7 +116,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         SavedBooksFragment()
                     ).commit()
                     binding.drawerLayout.close()
-                    binding.fragmentname.text = "Saqlanganlar"
+                    binding.fragmentname.text = R.string.saqlanganlar.toString()
                 }
                 R.id.lang -> {
                     parentFragmentManager.beginTransaction().replace(
@@ -125,7 +124,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         LanguageFragment()
                     ).commit()
                     binding.drawerLayout.close()
-                    binding.fragmentname.text = "Tilni o'zgartiring"
+                    binding.fragmentname.text = R.string.tilni_ozgartir.toString()
                 }
             }
             true

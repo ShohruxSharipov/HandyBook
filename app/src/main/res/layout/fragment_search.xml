@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="20dp"
-                android:text="Top Toifalar"
+                android:text="@string/top_toifalar"
                 android:textColor="@color/dark_blue"
                 android:textSize="20sp" />
 
@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="20dp"
-                android:text="Yaqinda izlanganlar"
+                android:text="@string/yaqinda_izlanganlar"
                 android:textColor="@color/dark_blue"
                 android:textSize="20sp" />
 

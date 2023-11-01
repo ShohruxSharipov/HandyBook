@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Batafsil"
+                android:text="@string/batafsil"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="E-Kitob"
+                        android:text="@string/e_kitob"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -107,7 +107,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Audio kitob"
+                        android:text="@string/audio_kitob"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -213,15 +213,15 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tavsifi" />
+                android:text="@string/tavsifi" />
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sharhlar" />
+                android:text="@string/sharhlar" />
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Iqtiboslar" />
+                android:text="@string/iqtiboslar" />
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager2.widget.ViewPager2
@@ -237,7 +237,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="20dp"
-            android:text="Tavsiyalar"
+            android:text="@string/tavsiyalar"
             android:textColor="@color/dark_blue"
             android:textSize="20sp"
             android:textStyle="bold"

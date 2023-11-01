@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HandyBook</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="iltimos_kutib_turing">Please wait …</string>
+    <string name="barchasini_ko_rish">See all</string>
+    <string name="darsliklar">Subjects</string>
+    <string name="romanlar">Romans</string>
+    <string name="kitob_yoki_muallifni_qidiring">Search book …</string>
+    <string name="audio_kitob">Audio book</string>
+    <string name="e_kitob">E-Book</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+    <string name="kirish">Enter</string>
+    <string name="ro_yxatdan_o_tish">Register</string>
+    <string name="bosh_sahifa">Home</string>
+    <string name="batafsil">More</string>
+    <string name="tavsifi">Description</string>
+    <string name="sharhlar">Comments</string>
+    <string name="iqtiboslar">Quotes</string>
+    <string name="tavsiyalar">Recommendations</string>
+    <string name="add_your_comment">Add your comment …</string>
+    <string name="tilni_qidirish">Search language</string>
+    <string name="top_toifalar">Top Categories</string>
+    <string name="yaqinda_izlanganlar">Recently searched</string>
+    <string name="tilni_ozgartir">Change Language</string>
+    <string name="saqlanganlar">Saved</string>
+    <string name="qidiruv">Search</string>
+    <string name="asosiy">Home</string>
+    <string name="maqolalar">Articles</string>
+    <string name="ijtimoiy_tarmoq">Social media</string>
+    <string name="telegram_kanalimiz">Telegram Channel</string>
+    <string name="instagram_do_konimiz">Instagram market</string>
+    <string name="ulashish">Share</string>
+    <string name="bizga_baho_bering">Rate us</string>
+    <string name="akkount">Account</string>
+    <string name="hisobdan_chiqish">Log out</string>
+</resources>
