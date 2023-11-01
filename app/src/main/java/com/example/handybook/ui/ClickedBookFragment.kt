@@ -20,6 +20,7 @@ import com.example.handybook.databinding.FragmentClickedBookBinding
 import com.example.handybook.model.Book
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import retrofit2.Call
@@ -91,13 +92,6 @@ class ClickedBookFragment : Fragment() {
 
                     edit.putString("saved", gson.toJson(saved_list)).apply()
                 }
-                binding.booksImage.setOnClickListener {
-                    val bundle = Bundle()
-                    bundle.putInt("bookid", book.id)
-                    findNavController().navigate(
-                        R.id.action_clickedBookFragment_to_commentsFragment, bundle
-                    )
-                }
             }
 
             override fun onFailure(call: Call<Book>, t: Throwable) {
@@ -140,10 +134,14 @@ class ClickedBookFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-
-        val adapter = ViewPagerAdapter(parentFragmentManager, lifecycle)
+        val tabtitle = arrayOf("Info","Comments","Quotes")
+        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,id)
         binding.viewpager.adapter = adapter
 
+        TabLayoutMediator(binding.tablayout,binding.viewpager){
+            tab,position->
+                tab.text = tabtitle[position]
+        }.attach()
 
 
         return binding.root

@@ -7,16 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
 import com.example.handybook.adapter.CommentAdapter
-import com.example.handybook.databinding.FragmentCommentsBinding
-import com.example.handybook.model.AddComment
+import com.example.handybook.databinding.FragmentCommentBinding
 import com.example.handybook.model.Comment
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.properties.Delegates
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,10 +26,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CommentsFragment.newInstance] factory method to
+ * Use the [CommentFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CommentsFragment : Fragment() {
+class CommentFragment(val book_id: Int) : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -45,54 +46,27 @@ class CommentsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentCommentsBinding.inflate(inflater, container, false)
-        val id = arguments?.getInt("bookid")
+        val binding = FragmentCommentBinding.inflate(inflater, container, false)
         val api = APIClient.getInstance().create(APIService::class.java)
-        Log.d("TAG3", "onCreateView: $id")
 
-        api.bookComment(id!!).enqueue(object : Callback<List<Comment>> {
+        api.bookComment(book_id).enqueue(object : Callback<List<Comment>> {
             override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
                 Log.d("TAG2", "onResponse: ${response.body()}")
-                binding.commentsRv.adapter = CommentAdapter(response.body()!!.reversed())
+                binding.commenttRv.adapter = CommentAdapter(response.body()!!.reversed())
             }
 
             override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
                 Log.d("TAG", "onFailure: $t")
             }
         })
-
-        binding.send.setOnClickListener {
-            if (!binding.comment.text.isNullOrBlank()) {
-                val comment = AddComment(book_id = id, text = binding.comment.text.toString(), user_id = 1 )
-                api.createComment(comment).enqueue(object :Callback<AddComment>{
-                    override fun onResponse(
-                        call: Call<AddComment>,
-                        response: Response<AddComment>
-                    ) {
-                        Toast.makeText(requireContext(), "Sent", Toast.LENGTH_SHORT).show()
-                        binding.comment.text!!.clear()
-                    }
-
-                    override fun onFailure(call: Call<AddComment>, t: Throwable) {
-                        Log.d("TAG", "onFailure: $t")
-                    }
-                })
-                api.bookComment(id).enqueue(object : Callback<List<Comment>> {
-                    override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
-                        Log.d("TAG2", "onResponse: ${response.body()}")
-                        binding.commentsRv.adapter = CommentAdapter(response.body()!!.reversed())
-                    }
-
-                    override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
-                        Log.d("TAG", "onFailure: $t")
-                    }
-                })
-
-            } else Toast.makeText(requireContext(), "Write something", Toast.LENGTH_SHORT).show()
+        binding.addComment.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putInt("bookid", book_id)
+            findNavController().navigate(R.id.action_clickedBookFragment_to_commentsFragment,bundle)
         }
-        binding.back.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
+
+
+
         return binding.root
     }
 
@@ -103,16 +77,18 @@ class CommentsFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CommentsFragment.
+         * @return A new instance of fragment CommentFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CommentsFragment().apply {
+        fun newInstance(param1: String, param2: String): CommentFragment {
+            val book_id by Delegates.notNull<Int>()
+            return CommentFragment(book_id).apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
+        }
     }
 }
