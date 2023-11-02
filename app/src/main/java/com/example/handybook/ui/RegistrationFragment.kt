@@ -75,7 +75,7 @@ class RegistrationFragment : Fragment() {
         }
 
         binding.backarrow.setOnClickListener {
-            findNavController().navigate(R.id.action_registrationFragment_to_loginFragment2)
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         return binding.root

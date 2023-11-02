@@ -77,6 +77,10 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+
+        binding.royxatdan.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment2)
+        }
         return binding.root
     }
 

@@ -25,7 +25,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:text="@string/hisobingizga_kiring"
-        android:textColor="#0f1d4c"
+        android:textColor="@color/dark_blue"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="24dp"
         android:text="@string/email"
-        android:textColor="#0f1d4c"
+        android:textColor="@color/dark_blue"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -72,7 +72,7 @@
         android:layout_marginStart="26dp"
         android:layout_marginTop="24dp"
         android:text="Parol"
-        android:textColor="#0f1d4c"
+        android:textColor="@color/dark_blue"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -89,7 +89,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
         android:textColorHint="#0f1d4c"
-        android:hint="•••••••••"
+        android:hint="@string/parol"
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -111,17 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/password" />
 
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="Meni eslab qol"
-        android:textColor="#0f1d4c"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/kirish"
@@ -132,11 +122,11 @@
         android:layout_marginEnd="24dp"
         android:backgroundTint="#B8E8F2"
         android:text="Kirish"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
 <!--    <ImageView-->
 <!--        android:id="@+id/imageView2"-->
@@ -154,10 +144,9 @@
         android:layout_marginStart="92dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Hisobingiz yo'qmi ?"
-        android:textColor="#0f1d4c"
+        android:text="@string/hisobingiz_yo_qmi"
+        android:textColor="@color/dark_blue"
         android:textSize="15sp"
-        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/kirish" />
 

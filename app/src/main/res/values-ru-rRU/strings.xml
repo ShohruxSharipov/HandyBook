@@ -35,4 +35,15 @@
     <string name="bizga_baho_bering">Оцените нас</string>
     <string name="akkount">Аккаунт</string>
     <string name="hisobdan_chiqish">Выход</string>
+    <string name="parolni_takrorlang">Повторите пароль</string>
+    <string name="parolni_kiriting">Введите пароль</string>
+    <string name="parol">Пароль</string>
+    <string name="email">Электронная почта</string>
+    <string name="ism">Имя</string>
+    <string name="familiya">Фамилия</string>
+    <string name="hisobingizga_kiring">Войдите в свой аккаунт</string>
+    <string name="parolingizni_unutdingmiz">Забыли пароль ?</string>
+    <string name="meni_eslab_qol">Запомнить меня</string>
+    <string name="hisobingiz_yo_qmi">У вас нет учетной записи?</string>
+
 </resources>
