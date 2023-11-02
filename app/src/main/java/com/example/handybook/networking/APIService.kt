@@ -1,6 +1,7 @@
 package com.example.handybook.networking
 
 import com.example.handybook.model.AddComment
+import com.example.handybook.model.AddUser
 import com.example.handybook.model.Book
 import com.example.handybook.model.Category
 import com.example.handybook.model.Comment
@@ -30,7 +31,7 @@ interface APIService {
     fun createComment(@Body comment: AddComment):Call<AddComment>
 
     @POST("/book-api/register")
-    fun createUser(@Body user: User):Call<User>
+    fun createUser(@Body user: User):Call<AddUser>
 
     @POST("/book-api/login")
     fun login(@Body login: Login):Call<User>

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentRegistrationBinding
+import com.example.handybook.model.AddUser
 import com.example.handybook.model.User
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
@@ -54,17 +55,18 @@ class RegistrationFragment : Fragment() {
             binding.password.text.toString()
         )
         binding.go.setOnClickListener {
-            api.createUser(user).enqueue(object : Callback<User> {
-                override fun onResponse(call: Call<User>, response: Response<User>) {
+            api.createUser(user).enqueue(object : Callback<AddUser> {
+                override fun onResponse(call: Call<AddUser>, response: Response<AddUser>) {
                     if (response.isSuccessful) {
                         findNavController().navigate(R.id.action_registrationFragment_to_mainFragment)
                     }
                     else{
-                        Toast.makeText(requireContext(), "fuck u", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "aaa", Toast.LENGTH_SHORT).show()
+                        Log.d("TAG11", "onResponse: ${response.body()}")
                     }
                 }
 
-                override fun onFailure(call: Call<User>, t: Throwable) {
+                override fun onFailure(call: Call<AddUser>, t: Throwable) {
                     Log.d("TAG9", "onFailure: $t")
                 }
 
