@@ -1,6 +1,7 @@
 package com.example.handybook.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +54,7 @@ class InfoFragment(val book_id: Int) : Fragment() {
             }
 
             override fun onFailure(call: Call<Book>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d("TAG", "onFailure: $t")
             }
 
         })

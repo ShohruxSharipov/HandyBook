@@ -2,13 +2,18 @@ package com.example.handybook.ui
 
 import android.content.Context
 import android.graphics.Color
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -26,6 +31,7 @@ import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
 import kotlin.math.log
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,6 +49,8 @@ class ClickedBookFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var saved_list = mutableListOf<Book>()
+    var mediaPlayer: MediaPlayer? = null
+    var seekBar: SeekBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +75,7 @@ class ClickedBookFragment : Fragment() {
         val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
         val edit = cache.edit()
         val str = cache.getString("saved", "")
+        seekBar = binding.seekBar
         binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
         if (!str.isNullOrEmpty()) {
             saved_list = gson.fromJson(str, type)
@@ -81,6 +90,79 @@ class ClickedBookFragment : Fragment() {
                 binding.name.text = book.name
                 binding.bookRayting.text = book.reyting.toDouble().toString()
                 binding.bookauthor.text = book.author
+
+                binding.audiokitob.setOnClickListener {
+                    binding.audiokitob.setBackgroundResource(R.drawable.darkblue_button)
+                    binding.ekitob.setBackgroundColor(Color.TRANSPARENT)
+                    binding.audioImage.visibility = View.VISIBLE
+                    binding.booksImage.visibility = View.GONE
+                    binding.audiohelper.visibility = View.VISIBLE
+                    binding.audioBookName.text = book.name
+//                    val audioURL = book.audio
+                    val audioURL =
+                        "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
+                    mediaPlayer = MediaPlayer()
+                    mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                    mediaPlayer!!.setDataSource(audioURL)
+                    mediaPlayer!!.prepare()
+
+                    binding.playstop.setOnClickListener {
+                        initialiseSeekBar()
+                        if (!mediaPlayer!!.isPlaying) {
+                            try {
+                                mediaPlayer!!.start()
+                                requireActivity()
+                                    .onBackPressedDispatcher
+                                    .addCallback(requireActivity(), object : OnBackPressedCallback(true) {
+                                        override fun handleOnBackPressed() {
+                                            Log.d("TAG", "Fragment back pressed invoked")
+                                            // Do custom work here
+                                            mediaPlayer!!.stop()
+                                            // if you want onBackPressed() to be called as normal afterwards
+                                            if (isEnabled) {
+                                                isEnabled = false
+                                                requireActivity().onBackPressed()
+                                            }
+                                        }
+                                    }
+                                    )
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                            }
+                            binding.playstop.setImageResource(R.drawable.baseline_pause_circle_24)
+                        } else {
+                            mediaPlayer!!.pause()
+                            binding.playstop.setImageResource(R.drawable.baseline_play_circle_24)
+                        }
+
+                    }
+
+                    binding.seekBar.setOnSeekBarChangeListener(object :
+                        SeekBar.OnSeekBarChangeListener {
+                        override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                            if (p2) {
+                                mediaPlayer!!.seekTo(p1)
+                            }
+                        }
+
+                        override fun onStartTrackingTouch(p0: SeekBar?) {
+                        }
+
+                        override fun onStopTrackingTouch(p0: SeekBar?) {
+                        }
+                    })
+
+                }
+
+
+                binding.ekitob.setOnClickListener {
+                    binding.ekitob.setBackgroundResource(R.drawable.darkblue_button)
+                    binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
+                    binding.audioImage.visibility = View.INVISIBLE
+                    binding.booksImage.visibility = View.VISIBLE
+                    binding.audiohelper.visibility = View.INVISIBLE
+                }
+
                 if (isTheBookSaved(book)) {
                     binding.save.setBackgroundResource(R.drawable.baseline_bookmark_24)
                 } else binding.save.setBackgroundResource(R.drawable.baseline_bookmark_border_24)
@@ -116,19 +198,7 @@ class ClickedBookFragment : Fragment() {
             }
         })
 
-        binding.audiokitob.setOnClickListener {
-            binding.audiokitob.setBackgroundResource(R.drawable.darkblue_button)
-            binding.ekitob.setBackgroundColor(Color.TRANSPARENT)
-            binding.audioImage.visibility = View.VISIBLE
-            binding.booksImage.visibility = View.GONE
 
-        }
-        binding.ekitob.setOnClickListener {
-            binding.ekitob.setBackgroundResource(R.drawable.darkblue_button)
-            binding.audiokitob.setBackgroundColor(Color.TRANSPARENT)
-            binding.audioImage.visibility = View.INVISIBLE
-            binding.booksImage.visibility = View.VISIBLE
-        }
 
         binding.back.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -165,6 +235,24 @@ class ClickedBookFragment : Fragment() {
             }
         }
         return false
+    }
+
+    fun initialiseSeekBar(){
+//        seekBar!!.max = mediaPlayer!!.duration
+        seekBar!!.max = 10000
+
+        val handler = Handler()
+        handler.postDelayed(object : Runnable{
+            override fun run() {
+                try {
+                    seekBar!!.progress = mediaPlayer!!.currentPosition
+                    handler.postDelayed(this,1000)
+                }catch (e : Exception){
+                    seekBar!!.progress = 0
+                }
+            }
+
+        },0)
     }
 
     companion object {

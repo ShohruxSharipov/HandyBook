@@ -38,7 +38,7 @@ class EnterFragment : Fragment() {
     ): View {
         val binding = FragmentEnterBinding.inflate(inflater, container, false)
         binding.enter.setOnClickListener {
-            findNavController().navigate(R.id.action_enterFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_enterFragment_to_mainFragment)
         }
         binding.signUp.setOnClickListener {
             findNavController().navigate(R.id.action_enterFragment_to_registrationFragment)
