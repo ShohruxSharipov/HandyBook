@@ -35,4 +35,14 @@
     <string name="bizga_baho_bering">Rate us</string>
     <string name="akkount">Account</string>
     <string name="hisobdan_chiqish">Log out</string>
+    <string name="parolni_takrorlang">Repeat the password</string>
+    <string name="parolni_kiriting">Enter password</string>
+    <string name="parol">Password</string>
+    <string name="email">Email</string>
+    <string name="ism">Name</string>
+    <string name="familiya">Last Name</string>
+    <string name="hisobingizga_kiring">Log in</string>
+    <string name="parolingizni_unutdingmiz">Lost password ?</string>
+    <string name="meni_eslab_qol">Remember me</string>
+    <string name="hisobingiz_yo_qmi">Dont have an account?</string>
 </resources>
