@@ -46,37 +46,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentLoginBinding.inflate(inflater,container,false)
-        val api = APIClient.getInstance().create(APIService::class.java)
-        binding.kirish.setOnClickListener {
-            if (binding.emaili.text.isNullOrEmpty() || binding.paroli.text.isNullOrEmpty()){
-                Toast.makeText(requireContext(), "Fill all !", Toast.LENGTH_SHORT).show()
-            }
-            else{
-                val login1 = Login(username = "admin", password = "45761888")
-                api.login(login1).enqueue(object :Callback<User>{
-                    override fun onResponse(call: Call<User>, response: Response<User>) {
-                        if (response.body() == null){
-                            Toast.makeText(requireContext(), "null", Toast.LENGTH_SHORT).show()
-                        }
-                        else{
-                            Log.d("TAG9", "onResponse: ${response.body()}")
-                            Toast.makeText(requireContext(), "clicked", Toast.LENGTH_SHORT).show()
-                            val bundle = Bundle()
-                            val user = response.body()
-                            bundle.putSerializable("user",user)
-                            findNavController().navigate(R.id.action_loginFragment_to_mainFragment,bundle)
-                        }
-                    }
 
-                    override fun onFailure(call: Call<User>, t: Throwable) {
-                        Log.d("TAG", "onFailure: $t")
-                    }
-                })
-                binding.royxatdan.setOnClickListener {
-                    findNavController().navigate(R.id.action_loginFragment_to_registrationFragment2)
-                }
-            }
-        }
         return binding.root
     }
 

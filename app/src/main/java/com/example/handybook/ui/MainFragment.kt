@@ -54,26 +54,26 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                 R.id.bosh_sahifa -> {
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.container, BoshSahifaFragment()).commit()
-                    binding.fragmentname.text = R.string.bosh_sahifa.toString()
+                    binding.fragmentname.text = requireActivity().getString(R.string.bosh_sahifa)
                 }
 
                 R.id.qidiruv -> {
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.container, SearchFragment()).commit()
-                    binding.fragmentname.text = R.string.qidiruv.toString()
+                    binding.fragmentname.text = requireActivity().getString(R.string.qidiruv)
                 }
 
                 R.id.saqlanganlar -> {
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.container, SavedBooksFragment()).commit()
-                    binding.fragmentname.text = R.string.saqlanganlar.toString()
+                    binding.fragmentname.text = requireActivity().getString(R.string.saqlanganlar)
                 }
                 R.id.tilniozgartir -> {
                     parentFragmentManager.beginTransaction().replace(
                         R.id.container,
                         LanguageFragment()
                     ).commit()
-                    binding.fragmentname.text = R.string.tilni_ozgartir.toString()
+                    binding.fragmentname.text = requireActivity().getString(R.string.tilni_ozgartir)
                 }
             }
             true

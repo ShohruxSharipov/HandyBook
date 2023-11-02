@@ -20,9 +20,6 @@
         android:label="fragment_enter"
         tools:layout="@layout/fragment_enter" >
         <action
-            android:id="@+id/action_enterFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
             android:id="@+id/action_enterFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
@@ -81,9 +78,6 @@
         android:name="com.example.handybook.ui.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
-        <action
-            android:id="@+id/action_registrationFragment_to_loginFragment2"
-            app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_registrationFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

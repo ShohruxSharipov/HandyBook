@@ -134,13 +134,12 @@ class ClickedBookFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        val tabtitle = arrayOf("Info","Comments","Quotes")
-        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,id)
+        val tabtitle = arrayOf("Info", "Comments", "Quotes")
+        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle, id)
         binding.viewpager.adapter = adapter
 
-        TabLayoutMediator(binding.tablayout,binding.viewpager){
-            tab,position->
-                tab.text = tabtitle[position]
+        TabLayoutMediator(binding.tablayout, binding.viewpager) { tab, position ->
+            tab.text = tabtitle[position]
         }.attach()
 
 
