@@ -1,5 +1,6 @@
 package com.example.handybook.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentLoginBinding
@@ -15,6 +17,7 @@ import com.example.handybook.model.Login
 import com.example.handybook.model.User
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,6 +52,11 @@ class LoginFragment : Fragment() {
         val binding = FragmentLoginBinding.inflate(inflater,container,false)
         val api = APIClient.getInstance().create(APIService::class.java)
 
+        val gson = Gson()
+        val activity: AppCompatActivity = activity as AppCompatActivity
+        val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+        val edit = cache.edit()
+
         binding.kirish.setOnClickListener {
             if (binding.emaili.text.toString().isEmpty() or binding.paroli.text.toString().isEmpty()){
                 Toast.makeText(requireContext(), "Fill all !", Toast.LENGTH_SHORT).show()
@@ -58,10 +66,9 @@ class LoginFragment : Fragment() {
                     override fun onResponse(call: Call<AddUser>, response: Response<AddUser>) {
                         if (response.isSuccessful){
                             Toast.makeText(requireContext(), "You're right", Toast.LENGTH_SHORT).show()
-                            val bundle = Bundle()
-                            bundle.putSerializable("user",response.body())
+                            edit.putString("status", gson.toJson(response.body())).apply()
                             Log.d("TAG19", "onResponse: ${response.body()}")
-                            findNavController().navigate(R.id.action_loginFragment_to_mainFragment,bundle)
+                            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
                         }
                         else{
                             Toast.makeText(requireContext(), "you're wrong", Toast.LENGTH_SHORT).show()

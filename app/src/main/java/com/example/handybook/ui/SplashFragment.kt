@@ -52,31 +52,38 @@ class SplashFragment : Fragment() {
         val activity: AppCompatActivity = activity as AppCompatActivity
         val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
         val str = cache.getString("lang", "")
+        val str_1 = cache.getString("status", "")
 
         if (!str.isNullOrEmpty()) {
             currentLanguage = gson.fromJson(str, type)
             setLocale(currentLanguage)
         }
 
+
         val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.rotation)
         val handle = Handler()
         binding.imageView.startAnimation(anim)
         handle.postDelayed({
-            findNavController().navigate(R.id.action_splashFragment_to_enterFragment)
+            if (str_1.isNullOrEmpty()) {
+                findNavController().navigate(R.id.action_splashFragment_to_enterFragment)
+            } else {
+                findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
+            }
         }, 1000)
 
         return binding.root
     }
 
     private fun setLocale(localeName: String) {
-            val locale = Locale(localeName)
-            val res = resources
-            val dm = res.displayMetrics
-            val conf = res.configuration
-            conf.locale = locale
-            res.updateConfiguration(conf, dm)
+        val locale = Locale(localeName)
+        val res = resources
+        val dm = res.displayMetrics
+        val conf = res.configuration
+        conf.locale = locale
+        res.updateConfiguration(conf, dm)
 
     }
+
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) = SplashFragment().apply {

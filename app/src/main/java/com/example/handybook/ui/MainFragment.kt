@@ -2,6 +2,7 @@ package com.example.handybook.ui
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,9 +19,12 @@ import com.example.handybook.R
 import com.example.handybook.databinding.FragmentMainBinding
 import com.example.handybook.databinding.NavHeaderBinding
 import com.example.handybook.model.AddUser
+import com.example.handybook.model.Book
 import com.example.handybook.model.User
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -45,11 +49,18 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentMainBinding.inflate(inflater, container, false)
+
+        val gson = Gson()
+        val activity: AppCompatActivity = activity as AppCompatActivity
+        val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+        val type = object : TypeToken<AddUser>() {}.type
+        var str = cache.getString("status","")
+
         parentFragmentManager.beginTransaction()
             .add(R.id.container, BoshSahifaFragment())
             .commit()
 
-        val user = arguments?.getSerializable("user") as AddUser
+        val user = gson.fromJson<AddUser>(str,type)
 
         binding.bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -135,7 +146,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             }
             true
         }
-        val binding2 = NavHeaderBinding.inflate(inflater, container, false)
+
         val header = navigationView.getHeaderView(0)
         val name = header.findViewById<TextView>(R.id.name)
         val email = header.findViewById<TextView>(R.id.email)

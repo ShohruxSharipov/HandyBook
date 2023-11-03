@@ -30,7 +30,7 @@ interface APIService {
     @POST("/comment-api/create")
     fun createComment(@Body comment: AddComment):Call<AddComment>
 
-    @POST("/book-api/ register")
+    @POST("/book-api/register")
     fun createUser(@Body user: User):Call<AddUser>
 
     @POST("/book-api/login")

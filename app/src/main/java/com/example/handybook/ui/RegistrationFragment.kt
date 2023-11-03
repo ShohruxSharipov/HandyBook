@@ -1,5 +1,6 @@
 package com.example.handybook.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentRegistrationBinding
@@ -14,6 +16,7 @@ import com.example.handybook.model.AddUser
 import com.example.handybook.model.User
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,22 +50,30 @@ class RegistrationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentRegistrationBinding.inflate(inflater, container, false)
-        val api = APIClient.getInstance().create(APIService::class.java)
-        user = User(
-            binding.name.text.toString(),
-            "${binding.surname.text?.trim().toString()} ${binding.name.text?.trim().toString()}",
-            binding.email.text.toString(),
-            binding.password.text.toString()
-        )
+
+        val gson = Gson()
+        val activity: AppCompatActivity = activity as AppCompatActivity
+        val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+        val edit = cache.edit()
+
         binding.go.setOnClickListener {
+            val api = APIClient.getInstance().create(APIService::class.java)
+            user = User(
+                binding.name.text.toString(),
+                "${binding.surname.text?.trim().toString()} ${
+                    binding.name.text?.trim().toString()
+                }",
+                binding.email.text.toString(),
+                binding.password.text.toString()
+            )
+
             api.createUser(user).enqueue(object : Callback<AddUser> {
                 override fun onResponse(call: Call<AddUser>, response: Response<AddUser>) {
                     if (response.isSuccessful) {
-                        findNavController().navigate(R.id.action_registrationFragment_to_mainFragment)
-                    } else {
-                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
-                        Log.d("TAG_0", "${response.body()}")
+                        edit.putString("status", gson.toJson(response.body())).apply()
                     }
+                    findNavController().navigate(R.id.action_registrationFragment_to_mainFragment)
+                    Log.d("TAG", "Oppa: ${response.body()}")
                 }
 
                 override fun onFailure(call: Call<AddUser>, t: Throwable) {
