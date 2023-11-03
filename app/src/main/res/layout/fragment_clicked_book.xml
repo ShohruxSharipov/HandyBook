@@ -148,8 +148,6 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
 
-
-
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
@@ -213,10 +211,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tavsifi" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sharhlar" />
+
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -265,6 +265,96 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/barchsinikorish"
             tools:listitem="@layout/darslik_item" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/audiohelper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="16dp"
+            android:visibility="invisible"
+            app:cardCornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="100dp"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#880F1D4C"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/audio_book_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:layout_marginTop="24dp"
+                    android:text="O'tkan kunlar audio"
+                    android:textStyle="bold"
+                    android:textColor="@color/dark_blue"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/line" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/seekBar">
+
+                    <ImageView
+                        android:id="@+id/previous"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:src="@drawable/baseline_skip_previous_24" />
+
+                    <ImageView
+                        android:id="@+id/playstop"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:src="@drawable/baseline_play_circle_24" />
+
+                    <ImageView
+                        android:id="@+id/next"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:src="@drawable/baseline_skip_next_24" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/light_blue"
+                    android:progressTint="@color/light_blue"
+                    android:thumbTint="@color/light_blue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/audio_book_name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

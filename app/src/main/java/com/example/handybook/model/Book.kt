@@ -10,6 +10,7 @@ data class Book(
     val lang: String,
     val name: String,
     val publisher: String,
+    val audio: String,
     val reyting: Int,
     val status: Int,
     val type_id: Int,
