@@ -9,14 +9,18 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentMainBinding
+import com.example.handybook.databinding.NavHeaderBinding
+import com.example.handybook.model.AddUser
 import com.example.handybook.model.User
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.TextInputEditText
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -41,13 +45,11 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentMainBinding.inflate(inflater, container, false)
-//        val user = arguments?.getSerializable("user") as User
-//        Toast.makeText(requireContext(), user.user_name, Toast.LENGTH_SHORT).show()
         parentFragmentManager.beginTransaction()
             .add(R.id.container, BoshSahifaFragment())
             .commit()
 
-
+        val user = arguments?.getSerializable("user") as AddUser
 
         binding.bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -68,6 +70,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         .replace(R.id.container, SavedBooksFragment()).commit()
                     binding.fragmentname.text = requireActivity().getString(R.string.saqlanganlar)
                 }
+
                 R.id.tilniozgartir -> {
                     parentFragmentManager.beginTransaction().replace(
                         R.id.container,
@@ -120,6 +123,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                     binding.drawerLayout.close()
                     binding.fragmentname.text = R.string.saqlanganlar.toString()
                 }
+
                 R.id.lang -> {
                     parentFragmentManager.beginTransaction().replace(
                         R.id.container,
@@ -131,7 +135,12 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
             }
             true
         }
-
+        val binding2 = NavHeaderBinding.inflate(inflater, container, false)
+        val header = navigationView.getHeaderView(0)
+        val name = header.findViewById<TextView>(R.id.name)
+        val email = header.findViewById<TextView>(R.id.email)
+        name.text = user.fullname
+        email.text = "${user.username}@gmail.com"
 
         return binding.root
     }

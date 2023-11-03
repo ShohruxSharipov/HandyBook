@@ -34,5 +34,5 @@ interface APIService {
     fun createUser(@Body user: User):Call<AddUser>
 
     @POST("/book-api/login")
-    fun login(@Body login: Login):Call<User>
+    fun login(@Body login: Login):Call<AddUser>
 }

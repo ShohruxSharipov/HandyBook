@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentLoginBinding
+import com.example.handybook.model.AddUser
 import com.example.handybook.model.Login
 import com.example.handybook.model.User
 import com.example.handybook.networking.APIClient
@@ -46,6 +47,34 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentLoginBinding.inflate(inflater,container,false)
+        val api = APIClient.getInstance().create(APIService::class.java)
+
+        binding.kirish.setOnClickListener {
+            if (binding.emaili.text.toString().isEmpty() or binding.paroli.text.toString().isEmpty()){
+                Toast.makeText(requireContext(), "Fill all !", Toast.LENGTH_SHORT).show()
+            }else{
+                val login = Login(binding.emaili.text.toString(),binding.paroli.text.toString())
+                api.login(login).enqueue(object :Callback<AddUser>{
+                    override fun onResponse(call: Call<AddUser>, response: Response<AddUser>) {
+                        if (response.isSuccessful){
+                            Toast.makeText(requireContext(), "You're right", Toast.LENGTH_SHORT).show()
+                            val bundle = Bundle()
+                            bundle.putSerializable("user",response.body())
+                            Log.d("TAG19", "onResponse: ${response.body()}")
+                            findNavController().navigate(R.id.action_loginFragment_to_mainFragment,bundle)
+                        }
+                        else{
+                            Toast.makeText(requireContext(), "you're wrong", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<AddUser>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
+            }
+        }
+
 
         return binding.root
     }
