@@ -1,5 +1,6 @@
 package com.example.handybook.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,13 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.handybook.R
 import com.example.handybook.adapter.CommentAdapter
 import com.example.handybook.databinding.FragmentCommentsBinding
 import com.example.handybook.model.AddComment
+import com.example.handybook.model.AddUser
 import com.example.handybook.model.Comment
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,6 +51,12 @@ class CommentsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentCommentsBinding.inflate(inflater, container, false)
+        val type = object : TypeToken<AddUser>() {}.type
+        val gson = Gson()
+        val activity: AppCompatActivity = activity as AppCompatActivity
+        val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+        val user = gson.fromJson<AddUser>(cache.getString("status",""),type)
+
         val id = arguments?.getInt("bookid")
         val api = APIClient.getInstance().create(APIService::class.java)
         Log.d("TAG3", "onCreateView: $id")
@@ -63,7 +74,7 @@ class CommentsFragment : Fragment() {
 
         binding.send.setOnClickListener {
             if (!binding.comment.text.isNullOrBlank()) {
-                val comment = AddComment(book_id = id, text = binding.comment.text.toString(), user_id = 1 )
+                val comment = AddComment(book_id = id, text = binding.comment.text.toString(), user_id = user.id )
                 api.createComment(comment).enqueue(object :Callback<AddComment>{
                     override fun onResponse(
                         call: Call<AddComment>,

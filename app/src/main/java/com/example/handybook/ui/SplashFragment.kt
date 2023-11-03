@@ -47,7 +47,6 @@ class SplashFragment : Fragment() {
     ): View {
         val binding = FragmentSplashBinding.inflate(inflater, container, false)
         val type = object : TypeToken<String>() {}.type
-        var book: Book
         val gson = Gson()
         val activity: AppCompatActivity = activity as AppCompatActivity
         val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)

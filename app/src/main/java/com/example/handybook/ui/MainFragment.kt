@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentMainBinding
 import com.example.handybook.databinding.NavHeaderBinding
@@ -32,6 +33,7 @@ private const val ARG_PARAM2 = "param2"
 class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
     private var param1: String? = null
     private var param2: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +55,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         val gson = Gson()
         val activity: AppCompatActivity = activity as AppCompatActivity
         val cache = activity.getSharedPreferences("Cache", Context.MODE_PRIVATE)
+        val edit = cache.edit()
         val type = object : TypeToken<AddUser>() {}.type
         var str = cache.getString("status","")
 
@@ -116,14 +119,14 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         BoshSahifaFragment()
                     ).commit()
                     binding.drawerLayout.close()
-                    binding.fragmentname.text = R.string.bosh_sahifa.toString()
+                    binding.fragmentname.text = requireActivity().getString(R.string.bosh_sahifa)
                 }
 
                 R.id.search -> {
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.container, SearchFragment()).commit()
                     binding.drawerLayout.close()
-                    binding.fragmentname.text = R.string.qidiruv.toString()
+                    binding.fragmentname.text = requireActivity().getString(R.string.qidiruv)
                 }
 
                 R.id.saved -> {
@@ -132,7 +135,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         SavedBooksFragment()
                     ).commit()
                     binding.drawerLayout.close()
-                    binding.fragmentname.text = R.string.saqlanganlar.toString()
+                    binding.fragmentname.text = requireActivity().getString(R.string.saqlanganlar)
                 }
 
                 R.id.lang -> {
@@ -141,7 +144,21 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
                         LanguageFragment()
                     ).commit()
                     binding.drawerLayout.close()
-                    binding.fragmentname.text = R.string.tilni_ozgartir.toString()
+                    binding.fragmentname.text = requireActivity().getString(R.string.tilni_ozgartir)
+                }
+
+                R.id.account ->{
+                    binding.dialogCard.visibility = View.VISIBLE
+                    drawerLayout!!.close()
+                    binding.container.isEnabled = false
+                    binding.logout.setOnClickListener {
+                        binding.dialogCard.visibility = View.GONE
+                        cache.edit().clear().apply()
+                        findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
+                    }
+                    binding.cancel.setOnClickListener {
+                        binding.dialogCard.visibility = View.GONE
+                    }
                 }
             }
             true
@@ -152,6 +169,7 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
         val email = header.findViewById<TextView>(R.id.email)
         name.text = user.fullname
         email.text = "${user.username}@gmail.com"
+
 
         return binding.root
     }
@@ -170,4 +188,5 @@ class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         TODO("Not yet implemented")
     }
+
 }

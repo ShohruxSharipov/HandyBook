@@ -91,25 +91,33 @@ class ClickedBookFragment : Fragment() {
                 binding.bookRayting.text = book.reyting.toDouble().toString()
                 binding.bookauthor.text = book.author
 
+                binding.audioBookName.text = book.name
+                var audioURL =
+                    "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
+                mediaPlayer = MediaPlayer()
+                mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                mediaPlayer!!.setDataSource(audioURL)
+                mediaPlayer!!.prepare()
                 binding.audiokitob.setOnClickListener {
                     binding.audiokitob.setBackgroundResource(R.drawable.darkblue_button)
                     binding.ekitob.setBackgroundColor(Color.TRANSPARENT)
                     binding.audioImage.visibility = View.VISIBLE
                     binding.booksImage.visibility = View.GONE
                     binding.audiohelper.visibility = View.VISIBLE
-                    binding.audioBookName.text = book.name
-//                    val audioURL = book.audio
-                    val audioURL =
-                        "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
-                    mediaPlayer = MediaPlayer()
-                    mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
-                    mediaPlayer!!.setDataSource(audioURL)
-                    mediaPlayer!!.prepare()
-
                     binding.playstop.setOnClickListener {
+
                         initialiseSeekBar()
                         if (!mediaPlayer!!.isPlaying) {
                             try {
+                                binding.playstop.setImageResource(R.drawable.baseline_pause_circle_24)
+                                audioURL =
+                                    "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3"
+                                if (book.audio != null){
+                                    audioURL = book.audio
+                                }
+                                else{
+                                    Toast.makeText(requireContext(), "Auido book not found !", Toast.LENGTH_SHORT).show()
+                                }
                                 mediaPlayer!!.start()
                                 requireActivity()
                                     .onBackPressedDispatcher
@@ -129,7 +137,6 @@ class ClickedBookFragment : Fragment() {
                             } catch (e: IOException) {
                                 e.printStackTrace()
                             }
-                            binding.playstop.setImageResource(R.drawable.baseline_pause_circle_24)
                         } else {
                             mediaPlayer!!.pause()
                             binding.playstop.setImageResource(R.drawable.baseline_play_circle_24)
@@ -248,7 +255,7 @@ class ClickedBookFragment : Fragment() {
                     seekBar!!.progress = mediaPlayer!!.currentPosition
                     handler.postDelayed(this,1000)
                 }catch (e : Exception){
-                    seekBar!!.progress = 0
+//                    seekBar!!.progress =
                 }
             }
 
