@@ -50,7 +50,7 @@ class RegistrationFragment : Fragment() {
         val api = APIClient.getInstance().create(APIService::class.java)
         user = User(
             binding.name.text.toString(),
-            "${binding.name.text.toString()} ${binding.surname.text.toString()}",
+            "${binding.surname.text?.trim().toString()} ${binding.name.text?.trim().toString()}",
             binding.email.text.toString(),
             binding.password.text.toString()
         )
@@ -59,10 +59,9 @@ class RegistrationFragment : Fragment() {
                 override fun onResponse(call: Call<AddUser>, response: Response<AddUser>) {
                     if (response.isSuccessful) {
                         findNavController().navigate(R.id.action_registrationFragment_to_mainFragment)
-                    }
-                    else{
-                        Toast.makeText(requireContext(), "aaa", Toast.LENGTH_SHORT).show()
-                        Log.d("TAG11", "onResponse: ${response.body()}")
+                    } else {
+                        Toast.makeText(requireContext(), "error", Toast.LENGTH_SHORT).show()
+                        Log.d("TAG_0", "${response.body()}")
                     }
                 }
 
@@ -72,8 +71,6 @@ class RegistrationFragment : Fragment() {
 
             })
         }
-
-
 
         return binding.root
     }
