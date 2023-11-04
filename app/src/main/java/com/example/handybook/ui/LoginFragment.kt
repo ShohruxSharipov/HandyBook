@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentLoginBinding
@@ -69,6 +70,7 @@ class LoginFragment : Fragment() {
                             edit.putString("status", gson.toJson(response.body())).apply()
                             Log.d("TAG19", "onResponse: ${response.body()}")
                             findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+
                         }
                         else{
                             Toast.makeText(requireContext(), "you're wrong", Toast.LENGTH_SHORT).show()
